@@ -1,0 +1,31 @@
+version: "3.8"
+
+volumes:
+  database:
+
+services:
+
+  phalconphp:
+    image: phalconphp/php-apache:ubuntu-16.04
+    ports:
+      - 80:80
+      - 443:443
+    working_dir: /app
+    volumes:
+      - ./project/:/app
+    environment:
+      WEB_DOCUMENT_ROOT: /app
+
+  database:
+    image: postgres:14-alpine
+    restart: always
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=phalcon
+      - POSTGRES_PASSWORD=phalcon
+      - POSTGRES_DB=fycphalcon
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp

@@ -8,11 +8,13 @@ services:
   phalconphp:
     image: phalconphp/php-apache:ubuntu-16.04
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     working_dir: /app
     volumes:
-      - ./project/:/app
+      - ./project:/app
+      - ./apache/apache2.conf:/etc/apache2/apache2.conf
+      - ./apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
     environment:
       WEB_DOCUMENT_ROOT: /app
 

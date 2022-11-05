@@ -45,15 +45,17 @@ $di->set(
         return $url;
     }
 );
+// la route sera toujours / nom du controller / action du controller
 
 $di->set(
-    'postgres',
+    'db',
     function () {
         return new DbAdapter(
             [
+                'adapter'  => 'Mysql',
                 'host'     => 'database',
-                'username' => 'phalcon',
-                'password' => 'phalcon',
+                'username' => 'root',
+                'password' => 'fycphalcon',
                 'dbname'   => 'fycphalcon',
             ]
         );

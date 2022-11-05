@@ -1,3 +1,15 @@
 .idea/
 .git/
+database/
+vendor/
+composer.lock
+.env
+.env.example
+.env.testing
+.env.testing.example
+phpunit.xml
+phpunit.xml.dist
+server.php
+storage/
+tests/
 

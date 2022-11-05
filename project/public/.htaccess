@@ -1,4 +1,10 @@
- RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^((?s).*)$ index.php?_url=/$1 [QSA,L]
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^((?s).*)$ index.php?_url=/$1 [QSA,L]
+
+# permet de rediriger les urls sans le / final
+# redirige tout vers index.php
+# et envoie la variable _url avec l'url demandée
+# exemple : http://www.monsite.com/monarticle (ce qu'on voit)
+# devient : http://www.monsite.com/index.php?_url=/monarticle (ce qu'on envoie au serveur)

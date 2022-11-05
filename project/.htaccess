@@ -2,3 +2,11 @@
 RewriteEngine on
 RewriteRule  ^$ public/    [L]
 RewriteRule  ((?s).*) public/$1 [L]
+
+# permet de rediriger les requêtes vers le dossier public
+# si la requête est vide, on redirige vers le dossier public
+# si la requête n'est pas vide, on redirige vers le dossier public suivi de la requête
+# L permet de ne pas continuer à chercher d'autres règles
+# ?s permet de prendre en compte les caractères spéciaux comme les espaces
+
+

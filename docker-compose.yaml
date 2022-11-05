@@ -5,8 +5,31 @@ volumes:
 
 services:
 
+
+  database:
+    image: mysql:5.7.22
+    restart: always
+    volumes:
+      - ./database:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: fycphalcon
+      MYSQL_ROOT_PASSWORD: fycphalcon
+      MYSQL_PASSWORD: phalcon
+      MYSQL_USER: phalcon
+    command: ["mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+
   phalconphp:
     image: phalconphp/php-apache:ubuntu-16.04
+    depends_on:
+      - database
     ports:
       - "80:80"
       - "443:443"
@@ -17,17 +40,14 @@ services:
       - ./apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
     environment:
       WEB_DOCUMENT_ROOT: /app
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
-  database:
-    image: postgres:14-alpine
-    restart: always
-    volumes:
-      - database:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=phalcon
-      - POSTGRES_PASSWORD=phalcon
-      - POSTGRES_DB=fycphalcon
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
     ports:
-      - target: 5432
-        published: 5432
-        protocol: tcp
+      - 8888:80
+    environment:
+      - PMA_ARBITRARY=1

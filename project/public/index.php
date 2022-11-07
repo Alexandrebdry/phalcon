@@ -1,5 +1,5 @@
 <?php
-
+/*
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Application;
@@ -20,7 +20,6 @@ $loader->registerDirs(
         APP_PATH . '/models/',
     ]
 );
-
 $loader->register();
 
 // Create a DI
@@ -62,7 +61,6 @@ $di->set(
     }
 );
 
-
 $application = new Application($di);
 
 try {
@@ -74,3 +72,62 @@ try {
     echo 'Exception: ', $e->getMessage();
 }
 
+*/
+
+use Phalcon\Loader;
+use Phalcon\Mvc\Micro;
+use Phalcon\Mvc\Micro\Collection as MicroCollection;
+use Phalcon\Di\FactoryDefault;
+use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+
+
+define('BASE_PATH', dirname(__DIR__));
+define('APP_PATH', BASE_PATH . '/app');
+
+// Register an autoloader
+$loader = new Loader();
+
+
+$loader->registerDirs(
+    [
+        APP_PATH . '/controllers/',
+        APP_PATH . '/models/',
+    ]
+);
+$loader->register();
+
+$di = new FactoryDefault() ; 
+$di->set(
+    'db',
+    function () {
+        return new DbAdapter(
+            [
+                'adapter'  => 'Mysql',
+                'host'     => 'database',
+                'username' => 'root',
+                'password' => 'fycphalcon',
+                'dbname'   => 'fycphalcon',
+            ]
+        );
+    }
+);
+
+$app = new Micro() ; 
+$app->setDI($di) ; 
+
+$app->get('/',function() use($app){
+    $res = $app->response ; 
+    $res->setJsonContent(['Bonjour monde ! '])->send();
+});
+
+$users = new MicroCollection() ; 
+$users->setHandler(new UserController()) ; 
+$users->setPrefix('/users') ; 
+$users->get('/','getCollection') ;
+$users->get('/{id}', 'get') ;
+$users->post('/','post') ;
+
+
+
+$app->mount($users) ;
+$app->handle();

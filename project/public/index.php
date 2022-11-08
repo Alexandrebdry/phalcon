@@ -121,13 +121,12 @@ $app->get('/',function() use($app){
 });
 
 $users = new MicroCollection() ; 
-$users->setHandler(new UserController()) ; 
+$users->setHandler(new UserController()) ;
 $users->setPrefix('/users') ; 
 $users->get('/','getCollection') ;
 $users->get('/{id}', 'get') ;
 $users->post('/','post') ;
 
 
-
 $app->mount($users) ;
-$app->handle();
+$app->handle($_SERVER['REQUEST_URI']);

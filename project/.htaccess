@@ -1,7 +1,8 @@
-
-RewriteEngine on
-RewriteRule  ^$ public/    [L]
-RewriteRule  ((?s).*) public/$1 [L]
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteRule  ^$ public/    [L]
+	RewriteRule  (.*) public/$1 [L]
+</IfModule>
 
 # permet de rediriger les requêtes vers le dossier public
 # si la requête est vide, on redirige vers le dossier public

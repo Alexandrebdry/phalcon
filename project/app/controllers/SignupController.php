@@ -13,14 +13,11 @@ class SignupController extends Controller
     public function registerAction()
     {
         $user = new User();
+
+        $user->name = $this->request->getPost('name') ;
+        $user->email = $this->request->getPost('email') ;
         // Store and check for errors
-        $success = $user->save(
-            $this->request->getPost(),
-            [
-                "name",
-                "email",
-            ]
-        );
+        $success = $user->save();
 
         if ($success) {
             echo "Thanks for registering!";

@@ -28,4 +28,3 @@ RUN curl -LOs https://github.com/phalcon/phalcon-devtools/releases/download/v4.1
     chmod +x phalcon.phar && \
     mv phalcon.phar /usr/local/bin/phalcon
 
-ENV WEB_DOCUMENT_ROOT=/var/www/html/project/public

@@ -1,0 +1,5 @@
+{
+    "require-dev": {
+        "phalcon/migrations": "^2.2"
+    }
+}

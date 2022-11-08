@@ -56,4 +56,12 @@ class UserController extends Controller {
         return $res ;
        
     }
+
+    public function patch($id) {
+        return 'patch a user' ;
+    }
+
+    public function delete($id) {
+        return 'delete a user' ;
+    }
 }

@@ -47,7 +47,6 @@ $di->setShared('view', function () {
     return $view;
 });
 
-
 $di->setShared('db', function () {
     $config = $this->getConfig();
 
@@ -67,13 +66,9 @@ $di->setShared('db', function () {
     return new $class($params);
 });
 
-
 $di->setShared('modelsMetadata', function () {
     return new MetaDataAdapter();
 });
-
-
-
 
 $di->set('flash', function () {
     $escaper = new Escaper();

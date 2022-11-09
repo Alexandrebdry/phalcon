@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 use Phalcon\Di\FactoryDefault ;
 use Phalcon\Mvc\Micro ;
-use Phalcon\Events\Event;
-use Phalcon\Events\Manager;
+
 
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
@@ -62,6 +61,7 @@ try {
     });
 
     $micro->mount(include APP_PATH . '/routes/users.php' ) ;
+    $micro->mount(include APP_PATH . '/routes/events.php') ;
     $micro->handle($_SERVER['REQUEST_URI']);
 
 } catch (\Exception $e) {

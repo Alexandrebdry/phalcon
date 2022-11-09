@@ -1,24 +1,24 @@
 <?php
 
-use Phalcon\Mvc\Controller ; 
+use Phalcon\Mvc\Controller ;
 use Phalcon\Http\Request;
 use Phalcon\Http\Response;
 
-class UserController extends Controller {
+class EventController extends Controller {
 
     public function getCollection() {
-        $users = User::find() ; 
-        if(count($users) > 1)
-            $this->response->setJsonContent($users) ;
-        else $this->response->setStatusCode(404) ; 
+        $events = Event::find() ;
+        if(count($events) > 1)
+            $this->response->setJsonContent($events) ;
+        else $this->response->setStatusCode(404) ;
         return $this->response ;
     }
 
     public function get($id) {
-        $user = User::findFirstById($id) ;
-        
-        if( ! is_null($user) && $user != false ) $this->response->setJsonContent($user);
-        else $this->response->setStatusCode(404) ; 
+        $event = Event::findFirstById($id) ;
+
+        if( ! is_null($event) && $event != false ) $this->response->setJsonContent($event);
+        else $this->response->setStatusCode(404) ;
         return $this->response ;
     }
 
@@ -26,17 +26,21 @@ class UserController extends Controller {
 
         $data = $this->request->getJsonRawBody() ; // Get body as json
 
-        if(isset($data->name) && isset($data->email)) {
-            $exist = User::findFirstByEmail($data->email) ;
+        if(
+            isset($data->name)
+        ) {
+            $exist = Event::findFirstByName($data->name) ;
+
             if($exist === false || $exist === null ) {
-                $user = new User($data) ;
-                $user->name = $data->name ; 
-                $user->email = $data->email ; 
-                $user->save() ;
-                if(!is_null($user->id)) {
+                $event = new Event($data) ;
+                $event->name = $data->name ;
+                $event->place_id = $data->place_id ;
+                $event->save() ;
+
+                if(!is_null($event->id)) {
                     $res = new Response() ;
                     $res->setStatusCode(201) ;
-                    $res->setJsonContent($user) ;
+                    $res->setJsonContent($event) ;
                 } else {
                     $res = new Response() ;
                     $res->setStatusCode(400) ;
@@ -44,17 +48,14 @@ class UserController extends Controller {
             } else {
                 $res = new Response() ;
                 $res->setStatusCode(400) ;
-                $res->setContent('User already exist') ;
+                $res->setContent('Event already exist') ;
             }
- 
+
         } else {
             $res = new Response() ;
-            $res->setStatusCode(400) ;
+            $res->setStatusCode(402) ;
         }
-
-        
         return $res ;
-       
     }
 
     public function patch($id) {

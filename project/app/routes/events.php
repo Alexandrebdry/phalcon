@@ -2,7 +2,7 @@
 use Phalcon\Mvc\Micro\Collection as MicroCollection;
 
 $events = new MicroCollection() ;
-$events->setHandler(new eventController() ) ;
+$events->setHandler(new EventController() ) ;
 $events->setPrefix($config->application->ApiUri . '/events') ;
 $events->get('/','getCollection') ;
 $events->get('/{id}', 'get') ;

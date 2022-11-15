@@ -3,10 +3,10 @@
 use Phalcon\Mvc\Model;
 class User extends Model
 {
-    protected $id;
-    protected $name;
-    protected $email;
-    protected $password;
+    public $id;
+    public $name;
+    public $email;
+    public $password;
 
     public function initialize() {
         $this->hasMany('id',Visitor::class,'v_user_id') ;

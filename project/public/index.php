@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Phalcon\Di\FactoryDefault ;
 use Phalcon\Mvc\Micro ;
 
-
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
 
@@ -30,6 +29,7 @@ try {
     $micro->before(function() use($micro) {
 
         if( $_SERVER['REQUEST_URI'] === '/api/login') return true ;
+        if( $_SERVER['REQUEST_URI'] === '/api/register') return true ;
 
         if( is_null($micro->request->getHeaders()['Authorization']) ) {
 
@@ -57,7 +57,7 @@ try {
 
     $micro->get($config->application->ApiUri,function() use($micro){
         $res = $micro->response ;
-        $res->setJsonContent([' Hello worlds! '])->send();
+        $res->setJsonContent(' Hello worlds! ')->send();
     });
 
     $micro->mount(include APP_PATH . '/routes/users.php' ) ;

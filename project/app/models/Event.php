@@ -3,7 +3,7 @@
 use Phalcon\Mvc\Model;
 class Event extends Model {
 
-    protected $id ;
+    public $id ;
     public $date ;
     public $sells_date ;
     public $name ;

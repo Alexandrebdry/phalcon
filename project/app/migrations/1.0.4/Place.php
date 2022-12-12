@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Migrations\Mvc\Model\Migration;
 
 /**
- * Class UserMigration_102
+ * Class PlaceMigration_102
  */
-class UserMigration_102 extends Migration
+class PlaceMigration_104 extends Migration
 {
     /**
      * Define the table structure
@@ -17,7 +17,7 @@ class UserMigration_102 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('User', [
+        $this->morphTable('Place', [
                 'columns' => [
                     new Column(
                         'id',
@@ -30,30 +30,57 @@ class UserMigration_102 extends Migration
                         ]
                     ),
                     new Column(
+                        'latitude',
+                        [
+                            'type' => Column::TYPE_INTEGER,
+                            'notNull' => true,
+                            'size' => 11,
+                            'after' => 'id'
+                        ]
+                    ),
+                    new Column(
+                        'longitude',
+                        [
+                            'type' => Column::TYPE_INTEGER,
+                            'notNull' => true,
+                            'size' => 11,
+                            'after' => 'latitude'
+                        ]
+                    ),
+                    new Column(
+                        'city',
+                        [
+                            'type' => Column::TYPE_VARCHAR,
+                            'notNull' => true,
+                            'size' => 255,
+                            'after' => 'longitude'
+                        ]
+                    ),
+                    new Column(
+                        'region',
+                        [
+                            'type' => Column::TYPE_VARCHAR,
+                            'notNull' => true,
+                            'size' => 255,
+                            'after' => 'city'
+                        ]
+                    ),
+                    new Column(
+                        'country',
+                        [
+                            'type' => Column::TYPE_VARCHAR,
+                            'notNull' => true,
+                            'size' => 255,
+                            'after' => 'region'
+                        ]
+                    ),
+                    new Column(
                         'name',
                         [
                             'type' => Column::TYPE_VARCHAR,
                             'notNull' => true,
                             'size' => 255,
-                            'after' => 'id'
-                        ]
-                    ),
-                    new Column(
-                        'email',
-                        [
-                            'type' => Column::TYPE_VARCHAR,
-                            'notNull' => true,
-                            'size' => 255,
-                            'after' => 'name'
-                        ]
-                    ),
-                    new Column(
-                        'password',
-                        [
-                            'type' => Column::TYPE_VARCHAR,
-                            'notNull' => true,
-                            'size' => 20,
-                            'after' => 'email'
+                            'after' => 'country'
                         ]
                     )
                 ],
@@ -62,7 +89,7 @@ class UserMigration_102 extends Migration
                 ],
                 'options' => [
                     'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '26',
+                    'AUTO_INCREMENT' => '1',
                     'ENGINE' => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8mb4_unicode_ci'
                 ],

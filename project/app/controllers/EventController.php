@@ -59,10 +59,23 @@ class EventController extends Controller {
     }
 
     public function patch($id) {
-        return 'patch a user' ;
+        $event = Event::findFirstById($id) ;
+        if(is_null($event)) return $this->response->setStatusCode(404)->setContent('Event not found') ;
+        $data =  $this->request->getJsonRawBody() ; // Get body as json
+        if(isset($data)) {
+            foreach ($data as $key => $val) {
+                $event->$key = $val ;
+            }
+            $event->save() ;
+            return $this->response->setJsonContent($event) ;
+        }
+        return $this->response->setStatusCode(400) ;
     }
 
     public function delete($id) {
-        return 'delete a user' ;
+        $event = Event::findFirstById($id) ;
+        if(is_null($event)) return $this->response->setStatusCode(404)->setContent('Event not found') ;
+        $event->delete() ;
+        return $this->response->setStatusCode(204) ;
     }
 }

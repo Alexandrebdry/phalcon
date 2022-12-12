@@ -7,8 +7,8 @@ use Phalcon\Http\Response;
 class UserController extends Controller {
 
     public function getCollection() {
-        $users = User::find() ; 
-        if(count($users) > 1) {
+        $users = User::find() ;
+        if(count($users) >= 1) {
             $response = [] ;
             foreach($users as $user) {
                 unset($user->password) ;
@@ -18,7 +18,7 @@ class UserController extends Controller {
 
             return $this->response->setJsonContent($response) ;
         }
-        else $this->response->setStatusCode(404) ; 
+        else $this->response->setStatusCode(404) ;
         return $this->response ;
     }
 
@@ -47,31 +47,27 @@ class UserController extends Controller {
                 $user->setPassword($data->password);
                 $user->save();
                 if (!is_null($user->id)) {
-                    $res = new Response();
-                    $res->setStatusCode(201);
+
+                    $this->response->setStatusCode(201);
                     unset($user->password) ;
-                    $res->setJsonContent($user);
+                    $this->response->setJsonContent($user);
                 } else {
-                    $res = new Response();
-                    $res->setStatusCode(400);
+                   $this->response->setStatusCode(400);
                 }
             } else {
-                $res = new Response();
-                $res->setStatusCode(400);
+                $this->response->setStatusCode(400);
                 $res->setContent('User already exist');
             }
-
         } else {
-            $res = new Response();
-            $res->setStatusCode(400);
+            $this->response->setStatusCode(400);
         }
-        return $res;
+        return $this->response;
     }
 
     public function patch($id) {
         $user = User::findFirstById($id) ;
-        $res = new Response() ;
-        if(is_null($user)) return $res->setStatusCode(404)->setContent('User not found') ;
+
+        if(is_null($user)) return $this->response->setStatusCode(404)->setContent('User not found') ;
         $data =  $this->request->getJsonRawBody() ; // Get body as json
         if(isset($data)) {
             foreach ($data as $key => $val) {

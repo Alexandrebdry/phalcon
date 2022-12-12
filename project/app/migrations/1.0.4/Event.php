@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Migrations\Mvc\Model\Migration;
 
 /**
- * Class UserMigration_102
+ * Class EventMigration_102
  */
-class UserMigration_102 extends Migration
+class EventMigration_104 extends Migration
 {
     /**
      * Define the table structure
@@ -17,7 +17,7 @@ class UserMigration_102 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('User', [
+        $this->morphTable('Event', [
                 'columns' => [
                     new Column(
                         'id',
@@ -30,39 +30,49 @@ class UserMigration_102 extends Migration
                         ]
                     ),
                     new Column(
+                        'date',
+                        [
+                            'type' => Column::TYPE_TIMESTAMP,
+                            'default' => "CURRENT_TIMESTAMP",
+                            'notNull' => true,
+                            'after' => 'id'
+                        ]
+                    ),
+                    new Column(
+                        'sells_date',
+                        [
+                            'type' => Column::TYPE_TIMESTAMP,
+                            'default' => "CURRENT_TIMESTAMP",
+                            'notNull' => true,
+                            'after' => 'date'
+                        ]
+                    ),
+                    new Column(
                         'name',
                         [
                             'type' => Column::TYPE_VARCHAR,
                             'notNull' => true,
                             'size' => 255,
-                            'after' => 'id'
+                            'after' => 'sells_date'
                         ]
                     ),
                     new Column(
-                        'email',
+                        'place_id',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type' => Column::TYPE_INTEGER,
                             'notNull' => true,
-                            'size' => 255,
+                            'size' => 11,
                             'after' => 'name'
-                        ]
-                    ),
-                    new Column(
-                        'password',
-                        [
-                            'type' => Column::TYPE_VARCHAR,
-                            'notNull' => true,
-                            'size' => 20,
-                            'after' => 'email'
                         ]
                     )
                 ],
                 'indexes' => [
-                    new Index('PRIMARY', ['id'], 'PRIMARY')
+                    new Index('PRIMARY', ['id'], 'PRIMARY'),
+                    new Index('place_id', ['place_id'], '')
                 ],
                 'options' => [
                     'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '26',
+                    'AUTO_INCREMENT' => '1',
                     'ENGINE' => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8mb4_unicode_ci'
                 ],

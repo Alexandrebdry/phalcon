@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Migrations\Mvc\Model\Migration;
 
 /**
- * Class UserMigration_102
+ * Class ArtistMigration_102
  */
-class UserMigration_102 extends Migration
+class ArtistMigration_104 extends Migration
 {
     /**
      * Define the table structure
@@ -17,7 +17,7 @@ class UserMigration_102 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('User', [
+        $this->morphTable('Artist', [
                 'columns' => [
                     new Column(
                         'id',
@@ -39,21 +39,12 @@ class UserMigration_102 extends Migration
                         ]
                     ),
                     new Column(
-                        'email',
+                        'style',
                         [
                             'type' => Column::TYPE_VARCHAR,
                             'notNull' => true,
                             'size' => 255,
                             'after' => 'name'
-                        ]
-                    ),
-                    new Column(
-                        'password',
-                        [
-                            'type' => Column::TYPE_VARCHAR,
-                            'notNull' => true,
-                            'size' => 20,
-                            'after' => 'email'
                         ]
                     )
                 ],
@@ -62,7 +53,7 @@ class UserMigration_102 extends Migration
                 ],
                 'options' => [
                     'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '26',
+                    'AUTO_INCREMENT' => '1',
                     'ENGINE' => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8mb4_unicode_ci'
                 ],

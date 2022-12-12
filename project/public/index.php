@@ -62,6 +62,10 @@ try {
 
     $micro->mount(include APP_PATH . '/routes/users.php' ) ;
     $micro->mount(include APP_PATH . '/routes/events.php') ;
+    $micro->mount(include APP_PATH . '/routes/artists.php') ;
+    $micro->mount(include APP_PATH . '/routes/places.php') ;
+    $micro->mount(include APP_PATH . '/routes/players.php') ;
+    $micro->mount(include APP_PATH . '/routes/visitors.php') ;
     $micro->handle($_SERVER['REQUEST_URI']);
 
 } catch (\Exception $e) {
